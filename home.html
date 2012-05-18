@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="English" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="main.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen">
+
+	<title>Non Linear Dynamical Systems</title>
+	
+    <script>
+      window.onload = function() {
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // do stuff here
+      };
+
+    </script>
+  </head>
+
+
+</head>	
+<body>
+	
+	<table id="wrapper" border="0" cellspacing="0" cellpadding="2" width="1020">
+	
+		<tr id="top">
+			<td colspan="2" id="header">
+				<h1> &nbsp; &nbsp; Non Linear Dynamical Systems</h1>
+			</td><!--end header-->
+			<td id="topright">
+			</td><!--end views-->
+		</tr><!--end top-->
+	
+		<tr id="middle">
+			<td id="size" width="280">
+				<h2> Overall Garage Size</h2>
+				<br />
+				<br />
+				<form name="overall">
+					<a class="button" id="sizebutton" href="#" onclick="main()">sketch view</a>
+					<br />
+					<br />
+					<br />
+					<br />
+					<p>
+			    			<input type="text" name="wallLen" size="1" maxlength="2" value="30" />
+						(ft)  Length of Front and Back walls
+					</p>
+					<br />
+					<p>
+						<input type="text" name="sideLen" size="1" maxlength="2" value="20" />
+						(ft)  Length of Left and Right walls
+					</p>
+					<br />
+					<p>
+						<input type="text" name="wallHt" size="1" maxlength="2" value="8" />
+						(ft)  Height of Garage to the Top Plate
+					</p>
+					<br />
+					<p>
+						<input type="text" name="roofPitch" size="1" maxlength="2" value="4" />
+						: 12  Roof Pitch <br />
+						(Foot rise per 12 feet of run)
+					</p> 
+					<br /><br />
+					<input type="radio" name="hipORgable" value="H" checked="checked" onclick="main()" /> Hip Roof &nbsp; &nbsp;
+					<input type="radio" name="hipORgable" value="G" onclick="main()" /> Gable Roof	
+				</form>
+			</td><!--end size-->
+		
+			<td id="paper" width="640">
+				<canvas id="myCanvas" width="640" height="480">
+					<p>please use firefox</p>
+				</canvas>
+			</td><!--end canvas-->
+		
+			<td id="views" width="90">
+				<form name="views">
+					<h3>Select View</h3>
+					<br />
+					<br />
+					<p>
+						<input type="radio" name="view" value="P" checked="checked" onclick="main()" /> Floor Plan 
+					</p>
+					<br />
+					<p>
+						<input type="radio" name="view" value="S1" onclick="main()" /> Elevations 
+					</p>
+				</form>
+			
+				<br />
+				<br />
+				<br />
+				<a class="button" href="#" onclick="return(popWin('materials.html'))">materials</a>
+		
+			</td><!--end buttons-->
+
+			</tr><!--end middle-->
+		
+		<tr id="bottom">
+			<td colspan="3" id="doors">
+				<div id="doorbuttons">
+					<h3> Add / Edit Doors</h3>
+					<a class="button" id="doorbutton" href="#" onclick="main()">sketch view</a>
+				</div>
+				<br />
+				<form name="cpformdoor">
+					<table id="walkdoors" border="0" cellspacing="5" cellpadding="2" width="900">
+						<tr>
+							<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Distance From</td><td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Width</td><td>Height</td><td>Left Wall</td>
+							<td>Select Side for Door</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox" name="DoorBox" value="D1" />
+							</td>
+							<td>Door No. 1</td>
+							<td>
+								<select id="wd1" name="wd1" size="1" onchange="wDoorPreset1()">
+									<option> custom </option>
+									<option> 2' X 7' </option>
+									<option> 2'- 6" X 7' </option>
+									<option> 3 X 7 </option>
+								</select>
+							</td>
+							<td>
+								<input type="text" name="nDwft1" size="1" maxlength="2" value="3" - 0 />ft
+								<input type="text" name="nDwin1" size="1" maxlength="2" value="0" - 0 />in
+							</td>
+							<td>
+								<input type="text" name="nDhft1" size="1" maxlength="2" value="3" - 0 />ft
+								<input type="text" name="nDhin1" size="1" maxlength="2" value="0" - 0 />in
+							</td>
+							<td>
+								<input type="text" name="nDdft1" size="1" maxlength="2" value="3" - 0 />ft
+								<input type="text" name="nDdin1" size="1" maxlength="2" value="0" - 0 />in
+							</td>
+							<td>
+								<input type="radio" name="D1Side" id="d1s1" value="S1" />Side 1
+								<input type="radio" name="D1Side" id="d1s2" value="S2" />Side 2
+								<input type="radio" name="D1Side" id="d1s3" value="S3" />Side 3
+								<input type="radio" name="D1Side" id="d1s4" value="S4" />Side 4
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox" name="DoorBox" value="D2" />
+							</td>
+							<td>Door No. 2</td>
+							<td>
+								<select id="wd2" name="wd2" size="1" onclick="wDoorPreset2()">
+									<option> custom </option>
+									<option> 2' X 7' </option>
+									<option> 2'- 6" X 7' </option>
+									<option> 3 X 7 </option>
+								</select>
+							</td>
+							<td>
+								<input type="text" name="nDwft2" size="1" maxlength="2" value="3" - 0 />ft
+								<input type="text" name="nDwin2" size="1" maxlength="2" value="0" - 0 />in
+							</td>
+							<td>
+								<input type="text" name="nDhft2" size="1" maxlength="2" value="3" - 0 />ft
+								<input type="text" name="nDhin2" size="1" maxlength="2" value="0" - 0 />in
+							</td>
+							<td>
+								<input type="text" name="nDdft2" size="1" maxlength="2" value="3" - 0 />ft
+								<input type="text" name="nDdin2" size="1" maxlength="2" value="0" - 0 />in
+							</td>
+							<td>
+								<input type="radio" name="D2Side" value="S1" />Side 1
+								<input type="radio" name="D2Side" value="S2" />Side 2
+								<input type="radio" name="D2Side" value="S3" />Side 3
+								<input type="radio" name="D2Side" value="S4" />Side 4
+							</td>	
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox" name="DoorBox" value="D3" />
+							</td>
+							<td>Door No. 3</td>
+							<td>
+								<select id="wd3" name="wd3" size="1" onclick="wDoorPreset3()">
+									<option> custom </option>
+									<option> 2' X 7' </option>
+									<option> 2'- 6" X 7' </option>
+									<option> 3 X 7 </option>
+								</select>
+							</td>
+							<td>
+								<input type="text" name="nDwft3" size="1" maxlength="2" value="3" - 0 />ft
+								<input type="text" name="nDwin3" size="1" maxlength="2" value="0" - 0 />in
+							</td>
+							<td>
+								<input type="text" name="nDhft3" size="1" maxlength="2" value="3" - 0 />ft
+								<input type="text" name="nDhin3" size="1" maxlength="2" value="0" - 0 />in
+							</td>
+							<td>
+								<input type="text" name="nDdft3" size="1" maxlength="2" value="3" - 0 />ft
+								<input type="text" name="nDdin3" size="1" maxlength="2" value="0" - 0 />in
+							</td>
+							<td>
+								<input type="radio" name="D3Side" value="S1" />Side 1
+								<input type="radio" name="D3Side" value="S2" />Side 2
+								<input type="radio" name="D3Side" value="S3" />Side 3
+								<input type="radio" name="D3Side" value="S4" />Side 4
+							</td>
+						</tr>
+					</table>
+				</form>
+			</td><!--end doors-->
+		
+		</tr><!--end bottom-->
+	
+	</table>
+	
+</body>
+</html>
+	
+	
+	
