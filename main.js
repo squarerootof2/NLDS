@@ -8,132 +8,82 @@ As well as all the functions used in main()
 */
 
 
-function drawDot(px, py, radius, color)
+function drawPoint(ctx, px, py, dx, radius)
 {
-        var canvas = document.getElementById("myCanvas");
-        var ctx = canvas.getContext("2d");
-
         ctx.beginPath();
         ctx.arc(px, py, radius, 0, 2 * Math.PI, false);
         ctx.fillStyle = "#8ED6FF"; // color
         ctx.fill();
         ctx.lineWidth = 1;
         ctx.strokeStyle = "black"; // color
-        
         ctx.stroke();
-};
-
-function plot(arr)
-{
-    var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-    
-    
-    ctx.stroke();
 }
+
 
 // Main part of program
-function runSystem(listLength, initialState)
+function runSystem(ctx, state, r, numberOfPoints, dx, radius)
 {
-    var r = 3.5; // 0 < r < 8
-    var n = listLength;
-    var states = new Array(initialState);
-    
-    for (var i = 0; i < n; i++)
+    for (var i = 1; i < numberOfPoints; i++)
     {
-        states[i+1] = r * (1 - states[i]) * states[i];
+        state = r * (1 - state) * state;
+        drawPoint(ctx, i, state, dx, radius);
     }
-    plot(states);
 }
 
 
-////////////
-// CANVAS //
-////////////
-
-
-
-// TODO do not convert all variables to integers
-function drawLine(px1, py1, px2, py2, color, canvas)
+function drawLine(px1, py1, px2, py2, ctx)
 {
-	
-	if (color == "red")
-	{
-		canvas.strokeStyle = "#ff0000";
-	}
-	else if (color == "green")
-	{
-		canvas.strokeStyle = "#00ff00";
-	}
-
-	canvas.beginPath();
-	canvas.moveTo(px1, py1);
-	canvas.lineTo(px2, py2);
-	canvas.closePath();
-	canvas.stroke();
+	ctx.strokeStyle = "#000000";
+	ctx.beginPath();
+	ctx.moveTo(px1, py1);
+	ctx.lineTo(px2, py2);
+	ctx.closePath();
+	ctx.stroke();
 }
 
 
-// TODO do not convert all variables to integers
-function drawLabel(label, px, py, color, canvas)
+function drawAxes()
 {
-	px = Math.round(px);
-	py = Math.round(py);
+}
+
+
+function drawLabel(label, px, py, ctx)
+{
 		
-	if (color == "red")
-	{
-		canvas.strokeStyle = "#ff0000";
-	}
-	else if (color == "green")
-	{
-		canvas.strokeStyle = "#00ff00";
-	}
-	else
-	{
-		canvas.strokeStyle = "#000000";
-	}
-
-	canvas.strokeText(label, px, py);
+	ctx.strokeStyle = "#000000";
+	ctx.strokeText(label, px, py);
 }
 
 
+function drawLabels()
+{
+}
 
-////////////
-//  MAIN  //
-////////////
-
-
-// TODO List
 
 function main()
 {
 
 	// get the canvas element using the DOM
-	var c = document.getElementById('myCanvas');
+	var canvas = document.getElementById('myCanvas');
 
 	// Make sure we don't execute when canvas isn't supported
-	if (c.getContext)
+	if (canvas.getContext)
 	{
+        /// INITIALIZE ALL VARIABLES HERE ///
+        
+		var numberOfPoints = document.getElementById('iterations');
+		var ctx = canvas.getContext('2d');
+        var ctxWidth = ctx.width; // 830
+		var ctxHeight = ctx.height; // 500
+        var state = document.getElementById('initialState');
+        var r = document.getElementById('R');
 
-		// use getContext to use the canvas for drawing
-		var ctx = c.getContext('2d');
+        var radius = 1;
 
-		// initialize variables
-		var ctxWidth = 640;
-		var ctxHeight = 480;
-
-		// get variables from forms
-		// add inches to these?
-		var fwallLen = document.overall.elements["wallLen"].value;
-		var cpHoG = document.overall.hipORgable
-
-		if (cpHoG[1].checked)
-		{
-			HorG = "gable";
-		}
-
-		ctx.clearRect(0, 0, ctxWidth, ctxHeight);
-
+        var graphWidth;
+        var graphHeight;
+        var dx = graphWidth / numberOfPoints;
+        
 		// validate forms
 		//if (!check_forms(fwallLen))
 		//{
@@ -141,15 +91,15 @@ function main()
 		//}
 
 		// Draw stuff
-        
-        
-        
+        ctx.clearRect(0, 0, ctxWidth, ctxHeight);
+        drawAxes();
+        drawLabels();
+        runSystem(ctx, state, r, numberOfPoints, dx, radius);
   	} 
 	else 
 	{
   		alert('You need google chrome.');
   	}
 }
-
 
 

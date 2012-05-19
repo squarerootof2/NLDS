@@ -16,24 +16,34 @@
 		<tr id="top">
 			<td colspan="3" id="header">
 				<h1> &nbsp; &nbsp; Non Linear Dynamical Systems</h1>
-			</td><!--end header-->
+			</td>
 			<td id="topright">
-			</td><!--end views-->
+			</td>
 		</tr><!--end top-->
 	
 		<tr id="middle">
 			<td id="size" width="200">
 				<h3> X<sub>n+1</sub> = R (1 - X<sub>n</sub>) X<sub>n</sub></h3>
 				<br />
-				<form name="overall">
-					<a class="button" id="sizebutton" href="#" onclick="main()"> &nbsp; &nbsp; Run &nbsp; &nbsp; </a>
+				<form name="all">
+					<a class="button" id="main" href="#" onclick="main()"> &nbsp; &nbsp; Run &nbsp; &nbsp; </a>
 					<br /><br />
 					<p>
                         R = 
-						<input type="text" name="roofPitch" size="12" maxlength="15" value="3.1" />
+						<input type="text" id="R" size="12" maxlength="15" value="3.1" />
 						<br />
 						(3 < R < 4)
 					</p> 	
+                    <br /><br />
+					<p>
+                        Initial Condition = 
+						<input type="text" id="initialState" size="2" maxlength="5" value="0.1" />
+					</p> 
+                    <br /><br />
+					<p>
+                        Number of Iterations = 
+						<input type="text" id="iterations" size="1" maxlength="2" value="10" />
+					</p> 
 				</form>
 			</td><!--end size-->
 		
@@ -41,16 +51,16 @@
 				<canvas id="myCanvas" width="830" height="500">
 					<p>please use chrome</p>
 				</canvas>
-			</td><!--end canvas-->
+			</td>
 		
 			<td id="views" width="50">
-			</td><!--end buttons-->
+			</td>
 
 		</tr><!--end middle-->
 		
 		<tr id="bottom">
 			<td colspan="3" id="doors">
-			</td><!--end doors-->
+			</td>
 		</tr><!--end bottom-->
 
 	</table>
