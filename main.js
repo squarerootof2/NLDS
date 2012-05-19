@@ -8,38 +8,42 @@ As well as all the functions used in main()
 */
 
 
-function drawDot()
+function drawDot(px, py, radius, color)
 {
         var canvas = document.getElementById("myCanvas");
-        var context = canvas.getContext("2d");
-        var centerX = canvas.width / 2;
-        var centerY = canvas.height / 2;
-        var radius = 2;
+        var ctx = canvas.getContext("2d");
 
-        context.beginPath();
-        context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = "#8ED6FF";
-        context.fill();
-        context.lineWidth = 1;
-        context.strokeStyle = "black";
-        context.stroke();
+        ctx.beginPath();
+        ctx.arc(px, py, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = "#8ED6FF"; // color
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "black"; // color
+        
+        ctx.stroke();
 };
 
-
-function check_forms(fwallLen, fsideLen, fwallHt, roofPitch)
+function plot(arr)
 {
-	if (check_num(fwallLen) == false)
-	{
-		alert("Please only enter whole positive numbers.");
-		return false;
-	}
-	else if (fwallLen < 4)
-	{
-		alert("Must be larger than 4 ft.");
-		return false;
-	}
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    
+    
+    ctx.stroke();
+}
 
-	else return true;
+// Main part of program
+function runSystem(listLength, initialState)
+{
+    var r = 3.5; // 0 < r < 8
+    var n = listLength;
+    var states = new Array(initialState);
+    
+    for (var i = 0; i < n; i++)
+    {
+        states[i+1] = r * (1 - states[i]) * states[i];
+    }
+    plot(states);
 }
 
 
@@ -50,7 +54,7 @@ function check_forms(fwallLen, fsideLen, fwallHt, roofPitch)
 
 
 // TODO do not convert all variables to integers
-function apDrawLine(px1, py1, px2, py2, color, canvas)
+function drawLine(px1, py1, px2, py2, color, canvas)
 {
 	
 	if (color == "red")
@@ -71,7 +75,7 @@ function apDrawLine(px1, py1, px2, py2, color, canvas)
 
 
 // TODO do not convert all variables to integers
-function apDrawString(label, px, py, color, canvas)
+function drawLabel(label, px, py, color, canvas)
 {
 	px = Math.round(px);
 	py = Math.round(py);
@@ -100,8 +104,6 @@ function apDrawString(label, px, py, color, canvas)
 
 
 // TODO List
-// is it a good idea to declare so many variables in a function that is called so many times?
-// maybe instead use smaller functions that update one or two variables at a time.
 
 function main()
 {
@@ -117,8 +119,8 @@ function main()
 		var ctx = c.getContext('2d');
 
 		// initialize variables
-		var pcanvasWidth = 640;
-		var pcanvasHeight = 480;
+		var ctxWidth = 640;
+		var ctxHeight = 480;
 
 		// get variables from forms
 		// add inches to these?
@@ -130,13 +132,13 @@ function main()
 			HorG = "gable";
 		}
 
-		ctx.clearRect(0, 0, pcanvasWidth, pcanvasHeight);
+		ctx.clearRect(0, 0, ctxWidth, ctxHeight);
 
 		// validate forms
-		if (!check_forms(fwallLen))
-		{
-			return false;
-		}
+		//if (!check_forms(fwallLen))
+		//{
+		//	return false;
+		//}
 
 		// Draw stuff
         
