@@ -10,23 +10,23 @@ As well as all the functions used in main()
 
 function drawPoint(ctx, px, py, dx, radius)
 {
-        ctx.beginPath();
-        ctx.arc(px, py, radius, 0, 2 * Math.PI, false);
-        ctx.fillStyle = "#8ED6FF"; // color
-        ctx.fill();
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "black"; // color
-        ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(px*dx, py, radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = "#8ED6FF";
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
 }
 
 
 // Main part of program
-function runSystem(ctx, state, r, numberOfPoints, dx, radius)
+function runSystem(ctx, state, r, numberOfPoints, dx, radius, graphHeight)
 {
     for (var i = 1; i < numberOfPoints; i++)
     {
         state = r * (1 - state) * state;
-        drawPoint(ctx, i, state, dx, radius);
+        drawPoint(ctx, i, (graphHeight - state), dx, radius);
     }
 }
 
@@ -80,9 +80,9 @@ function main()
 
         var radius = 1;
 
-        var graphWidth;
-        var graphHeight;
-        var dx = graphWidth / numberOfPoints;
+        var graphWidth = ctxWidth - 20; // make room for axes and labels.
+        var graphHeight = ctxHeight - 20;
+        var dx = (graphWidth / numberOfPoints);
         
 		// validate forms
 		//if (!check_forms(fwallLen))
@@ -94,12 +94,12 @@ function main()
         ctx.clearRect(0, 0, ctxWidth, ctxHeight);
         drawAxes();
         drawLabels();
-        runSystem(ctx, state, r, numberOfPoints, dx, radius);
-  	} 
+        runSystem(ctx, state, r, numberOfPoints, dx, radius, graphHeight);
+    } 
 	else 
 	{
-  		alert('You need google chrome.');
-  	}
+        alert('You need google chrome.');
+    }
 }
 
 
