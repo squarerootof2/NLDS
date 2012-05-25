@@ -9,34 +9,27 @@ As well as all the functions used in main()
 
 "use strict";
 
-function drawPoint(ctx, px, py, dx, radius)
+function drawPoint(ctx, px, py, radius)
 {
     ctx.beginPath();
-    ctx.arc((px*dx), py, radius, 0, 2 * Math.PI, false);
+    ctx.arc((px), py, radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = "#8ED6FF";
     ctx.fill();
     ctx.lineWidth = 1;
     ctx.strokeStyle = "black";
     ctx.stroke();
-    drawLabel("drawPoint", 10, 50,ctx);
 }
 
 
 // Main part of program
-function runSystem(ctx, state, r, numberOfPoints, dx, radius, graphHeight)
+function runSystem(ctx, state, r, numberOfPoints, dx, radius, ctxHeight, border, scale)
 {
+    drawPoint(ctx, border, (ctxHeight - border - (state*scale)), radius);
     for (var i = 1; i < numberOfPoints; i++)
     {
-        state = r * (1 - state) * state;
-        drawPoint(ctx, i, (graphHeight - state), dx, radius);
+        state = r * (1 - state) * state; // quadratic map
+        drawPoint(ctx, ((i*dx) + border), (ctxHeight - border - (state*scale)), radius);
     }
-    drawLabel("runSystem", 10, 40,ctx);
-    drawLabel(numberOfPoints, 10, 60,ctx);
-    drawLabel(state, 10, 70,ctx);
-    drawLabel(r, 10, 80,ctx);
-    drawLabel(dx, 10, 90,ctx);
-    drawLabel(radius, 10, 100,ctx);
-    drawLabel(graphHeight, 10, 110,ctx);
 }
 
 
@@ -48,18 +41,13 @@ function drawLine(px1, py1, px2, py2, ctx)
 	ctx.lineTo(px2, py2);
 	ctx.closePath();
 	ctx.stroke();
-    drawLabel("drawLine", 10, 20,ctx);
 }
 
 
-function drawAxes(ctx, ctxWidth, ctxHeight, graphWidth, graphHeight)
+function drawAxes(ctx, ctxWidth, ctxHeight, border)
 {
-    var side = (ctxWidth - graphWidth) / 2;
-    var top = (ctxHeight - graphHeight) / 2;
-    var bot = top;
-    drawLine(side, top, side, (ctxHeight - bot), ctx);
-    drawLine(side, (ctxHeight - bot), (ctxWidth - side), (ctxHeight - bot), ctx);
-    drawLabel("drawAxes", 10, 10,ctx);
+    drawLine(border, border, border, (ctxHeight - border), ctx); // vertical axis
+    drawLine(border, (ctxHeight - border), (ctxWidth - border), (ctxHeight - border), ctx); // horizontal axis
 }
 
 
@@ -67,14 +55,15 @@ function drawLabel(label, px, py, ctx)
 {
 		
 	ctx.strokeStyle = "#000000";
-    ctx.font="10px Arial";
+    ctx.font="20px Arial";
 	ctx.fillText(label, px, py);
 }
 
 
-function drawLabels(ctx)
+function drawLabels(ctx, ctxHeight, border, scale)
 {
-    drawLabel("drawLabels", 10, 30,ctx);
+    drawLabel("0", (border-20), (ctxHeight-border),ctx);
+    drawLabel("1", (border-20), (ctxHeight-border-scale),ctx);
 }
 
 
@@ -89,29 +78,35 @@ function main()
 	{
         /// INITIALIZE ALL VARIABLES HERE ///
         
-		var numberOfPoints = document.getElementById('iterations');
-		var ctx = canvas.getContext('2d');
-        var ctxWidth = ctx.width; // 830
-		var ctxHeight = ctx.height; // 500
-        var state = document.getElementById('initialState');
-        var r = document.getElementById('R');
+		//var numberOfPoints = document.getElementById('iterations');
+		//var ctx = canvas.getContext('2d');
+        //var ctxWidth = ctx.width; // 830
+		//var ctxHeight = ctx.height; // 500
+        //var state = document.getElementById('initialState');
+        //var r = document.getElementById('R');
 
-        var radius = 1;
+        var numberOfPoints = 200;
+        var ctx = canvas.getContext('2d');
+        var ctxWidth = 1050;
+		var ctxHeight = 600;
+        var scale = 400;
+        var state = 0.2;
+        var r = 3.59;
 
-        var graphWidth = ctxWidth - 100; // make room for axes and labels.
-        var graphHeight = ctxHeight - 100;
+
+        var radius = 3;
+        var border = 80; // number of pixels around the graph.
+
+        var graphWidth = ctxWidth - (2 * border); // make room for axes and labels.
+        var graphHeight = ctxHeight - (2 * border); // use border instead.
         var dx = (graphWidth / numberOfPoints);
 
 		// Draw stuff
         ctx.clearRect(0, 0, ctxWidth, ctxHeight);
-        drawAxes(ctx, ctxWidth, ctxHeight, graphWidth, graphHeight);
-        drawLabels(ctx);
-        runSystem(ctx, state, r, numberOfPoints, dx, radius, graphHeight);
+        drawAxes(ctx, ctxWidth, ctxHeight, border);
+        drawLabels(ctx, ctxHeight, border, scale);
+        runSystem(ctx, state, r, numberOfPoints, dx, radius, ctxHeight, border, scale);
         
-        drawLabel(graphHeight, 10, 120,ctx);
-        drawLabel(graphWidth, 10, 130,ctx);
-        drawLabel(ctxWidth, 10, 140,ctx);
-        drawLabel(r, 10, 150,ctx);
     } 
 	else 
 	{

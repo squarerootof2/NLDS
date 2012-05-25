@@ -27,7 +27,7 @@ body
 #top
 {
 	background: #555;
-	width: 1080px;
+	width: 1300px;
 	height: 50px;
 	padding: 10px;
 }
@@ -36,27 +36,27 @@ body
 #size
 {
 	background: #888;
-	height: 500px;
+	height: 600px;
 	padding: 10px;
 }
 
 #paper
 {
 	background: #feefef;
-	height: 500px;
+	height: 600px;
 }
 
 #canvas
 {
 	position: relative;
-	width: 830px;
-	height: 500px;
+	width: 1050px;
+	height: 600px;
 }
 
 #views
 {
 	background: #888;
-	height: 500px;
+	height: 600px;
 	padding: 10px;
 }
 
@@ -64,7 +64,7 @@ body
 #doors
 {
 	background: #666;
-	width: 1080px;
+	width: 1300px;
 	height: 50px; /* bottom thickness*/
 	padding: 10px;
 }
