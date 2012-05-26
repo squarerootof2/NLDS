@@ -53,7 +53,7 @@ function drawAxes(ctx, ctxWidth, ctxHeight, border)
 
 function drawLabel(label, px, py, ctx)
 {
-		
+	ctx.fillStyle = "#000000";	
 	ctx.strokeStyle = "#000000";
     ctx.font="20px Arial";
 	ctx.fillText(label, px, py);
@@ -78,27 +78,20 @@ function main()
 	{
         /// INITIALIZE ALL VARIABLES HERE ///
         
-		//var numberOfPoints = document.getElementById('iterations');
-		//var ctx = canvas.getContext('2d');
-        //var ctxWidth = ctx.width; // 830
-		//var ctxHeight = ctx.height; // 500
-        //var state = document.getElementById('initialState');
-        //var r = document.getElementById('R');
+		var numberOfPoints = document.getElementById('iterations').value - 0;
+		var ctx = canvas.getContext('2d');
+        var ctxWidth = canvas.width;
+		var ctxHeight = canvas.height;
+        var state = document.getElementById('initialState').value - 0;
+        var r = document.getElementById('R').value - 0;
 
-        var numberOfPoints = 200;
-        var ctx = canvas.getContext('2d');
-        var ctxWidth = 1050;
-		var ctxHeight = 600;
         var scale = 400;
-        var state = 0.2;
-        var r = 3.59;
 
-
-        var radius = 3;
+        var radius = 1;
         var border = 80; // number of pixels around the graph.
 
         var graphWidth = ctxWidth - (2 * border); // make room for axes and labels.
-        var graphHeight = ctxHeight - (2 * border); // use border instead.
+        var graphHeight = ctxHeight - (2 * border); // TODO: use this to get scale
         var dx = (graphWidth / numberOfPoints);
 
 		// Draw stuff
